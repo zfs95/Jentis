@@ -1,0 +1,5 @@
+jentis: {
+    consent: {
+        config: {}
+    } 
+}

@@ -1,0 +1,83 @@
+<html>
+	<head>
+		<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" 
+			data-cbid="20ac47c4-8099-4ccf-aaba-ee1d892808ea" type="text/javascript" async></script>
+
+		<title>JENTIS Consent Engine Test</title>
+
+		<!-- Register all event subscriptions to Jentis and Cookiebot events -->
+		<script src="./eventAggregator.js"></script>
+
+		<!-- Load Jentis configuration and engine / bridge scripts -->
+		<script src="./test_conf.js"></script>
+		<script src="../JentisConsentEngine.js"></script>		
+		<script src="./JCE_bridge_GTM.js"></script>
+
+		<!-- Load Cookiebot mock and Cookibot mock UI as a fallback for testing when Cookiebot does not allow testing without premium licence -->
+		<script src="./cookiebotMock.js"></script>
+		<script src="./cookiebotMockUIController.js"></script>	
+
+		<!-- Load cookie manager service that wraps calls to Cookiebot and Jentis (and also Cookiebot Mock during testing)
+		     It acts as a bridge between Cookiebot and Jentis APIs -->
+		<script src="./cookieManager.js"></script>	
+		
+		<link rel="stylesheet" href="./style.css" />	
+	</head>
+	<body>	
+		<!-- BEGIN: Mock Consent UI : It is a fallback for testing only when Consentbot scripts don't load correctly due to premium licence issue -->
+		<div class="container">
+			<div class="header">
+				<h1>JENTIS and Cookiebot Integration Test</h1>
+				<div>
+					<a href="#" onclick="setNonNecessaryCookieConsent()">Change Cookie Consent</a>
+				</div>
+			</div>
+			<div class="consentBar hidden">
+				<h2>Set Cookie Settings</h2>
+				<div class="option">
+					<input type="checkbox" id="necessary" checked /> <span>Necessary</span>
+				</div>
+				<div class="option">
+					<input type="checkbox" id="marketing"/> <span>Marketing</span>
+				</div>
+				<div class="option">
+					<input type="checkbox" id="statistics"/> <span>Statistics</span>
+				</div>
+				<div class="option">
+					<input type="checkbox" id="preferences"/> <span>Preferences</span>
+				</div>
+				<div class="buttonsContanier">
+					<button onclick="changeConsent('selection')">Accept Selection</button>
+					<button onclick="changeConsent('all')">Accept All</button>
+					<button onclick="changeConsent('deny')">Deny All</button>
+				</div>
+			</div>
+		</div>			
+		<!-- END:  Mock Consent UI -->
+
+
+
+		<!-- Initialize the CookieManager service and other initialization tasks -->
+		<script>
+			window.onload = (e) => {
+				window.cookieMgr = CookieManager();	
+				cookieMgr.renewCookieConsent();
+				console.log('Cookie Manager > capture Cookie invoked');
+			};
+
+			// == Link click event handler for setting non necessary cookies (only requied with Mock UI - not with actual Cookiebot)
+			function setNonNecessaryCookieConsent()  {				
+				cookieMgr.captureCookieConsent();				
+			}		
+			
+			// == Button click event handler for setting consent (only required with Mock Consent UI - not with actual Cookiebot)
+			function changeConsent(consentAction) {
+				cookieMgr.setCookieConsent(consentAction);
+			}
+		</script>
+		
+		<!-- Loads Cookiebot declaration UI setup scripts as per Cookiebot specs -->	
+		<script id="CookieDeclaration" src="https://consent.cookiebot.com/20ac47c4-8099-4ccf-aaba-ee1d892808ea/cd.js" 
+				type="text/javascript" async></script>	
+	</body>
+</html>
