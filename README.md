@@ -7,7 +7,7 @@
 <a href="https://www.cookiebot.com/en/?gclid=Cj0KCQjwlMaGBhD3ARIsAPvWd6jqzH65-UCA9socldpe5svC6Ai4sBTdVudZn5arqV7ugElu0ByLDEwaAs5FEALw_wcB">
     <img src="https://www.cookiebot.com/img/logo.svg" alt="Cookiebot logo" title="Cookiebot" align="right" height="60" />
 </a>
-
+<br/>
 # Jentis
 ## Preword
 Because of the legal situation in Europe we must get the consent of the user before we are allowed to track.
